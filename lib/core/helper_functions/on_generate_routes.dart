@@ -1,4 +1,5 @@
-import 'package:e_commerce_app/features/home/presentation/views/home_view.dart';
+import 'package:e_commerce_app/features/best_selling_fruit/presentation/views/best_selling_view.dart';
+import 'package:e_commerce_app/features/home/presentation/views/main_view.dart';
 import 'package:e_commerce_app/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case SignupView.route:
       return MaterialPageRoute(builder: (context) => const SignupView());
 
-    case HomeView.route:
-      return MaterialPageRoute(builder: (context) => const HomeView());
+    case MainView.route:
+      return MaterialPageRoute(builder: (context) => const MainView());
+
+    case BestSellingView.route:
+      return MaterialPageRoute(builder: (context) => const BestSellingView());
 
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold());

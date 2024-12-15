@@ -5,9 +5,11 @@ import 'package:e_commerce_app/core/widgets/add_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class FruitItem extends StatelessWidget {
-  const FruitItem({super.key});
+import '../entities/product_entity.dart';
 
+class FruitItem extends StatelessWidget {
+  const FruitItem({super.key, required this.productEntity});
+  final ProductEntity productEntity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,19 +37,21 @@ class FruitItem extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Image.asset(
-                  Assets.watermelon_test,
+                Flexible(
+                  child: Image.network(
+                    productEntity.imageUrl!,
+                  ),
                 ),
                 SizedBox(
                   height: 24,
                 ),
                 ListTile(
-                  title: Text('بطيخ', style: TextStyles.semiBold13),
+                  title: Text(productEntity.name, style: TextStyles.semiBold13),
                   subtitle: Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: '20 جنيه',
+                            text: '${productEntity.price} جنيه',
                             style: TextStyles.bold13.copyWith(
                               color: AppColor.secondaryColor,
                             )),
@@ -57,7 +61,7 @@ class FruitItem extends StatelessWidget {
                               color: AppColor.secondaryColor,
                             )),
                         TextSpan(
-                            text: 'الكيلو',
+                            text: 'كيلو',
                             style: TextStyles.semiBold13.copyWith(
                               color: AppColor.secondaryColor,
                             )),

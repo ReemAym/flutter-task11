@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/constant.dart';
 import 'package:e_commerce_app/core/error/custom_exceptions.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/services/database_service.dart';
+import 'package:e_commerce_app/core/services/shared_preferences_singleton.dart';
 import 'package:e_commerce_app/core/utils/backend_endpoint.dart';
 import 'package:e_commerce_app/features/auth/data/models/user_model.dart';
 import 'package:e_commerce_app/features/auth/domain/entity/user_entity.dart';
@@ -54,6 +57,7 @@ class AuthRepoImp extends AuthRepo {
           email: email, password: password);
 
       var userEntity = await getUserData(uid: user.uid);
+      await saveUserData(user: userEntity);
       return right(userEntity);
     } on CustomExceptions catch (e) {
       return left(ServerFailure(message: e.message));
@@ -70,6 +74,8 @@ class AuthRepoImp extends AuthRepo {
     try {
       user = await firebaseAuthService.signInWithGoogle();
       var userEntity = UserModel.fromFirebaseUser(user);
+      await saveUserData(user: userEntity);
+
       var userExit = await databaseService.checkIfDataExit(
         documentid: user.uid,
         path: BackendEndPoint.isUserExit,
@@ -101,6 +107,8 @@ class AuthRepoImp extends AuthRepo {
     try {
       user = await firebaseAuthService.signInWithFacebook();
       var userEntity = UserModel.fromFirebaseUser(user);
+      await saveUserData(user: userEntity);
+
       var userExit = await databaseService.checkIfDataExit(
         documentid: user.uid,
         path: BackendEndPoint.isUserExit,
@@ -127,6 +135,8 @@ class AuthRepoImp extends AuthRepo {
     try {
       user = await firebaseAuthService.signInWithApple();
       var userEntity = UserModel.fromFirebaseUser(user);
+      await saveUserData(user: userEntity);
+
       var userExit = await databaseService.checkIfDataExit(
         documentid: user.uid,
         path: BackendEndPoint.isUserExit,
@@ -151,7 +161,7 @@ class AuthRepoImp extends AuthRepo {
   Future addUserData({required UserEntity user}) async {
     await databaseService.addData(
       path: BackendEndPoint.addUserData,
-      data: user.toMap(),
+      data: UserModel.fromEntity(user).toMap(),
       documentid: user.uId,
     );
   }
@@ -162,5 +172,11 @@ class AuthRepoImp extends AuthRepo {
         path: BackendEndPoint.getUserData, documentid: uid);
 
     return UserModel.fromJson(data);
+  }
+
+  @override
+  Future saveUserData({required UserEntity user}) async {
+    var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
+    await SharedPreferencesSingleton.setString(KUserData, jsonData);
   }
 }

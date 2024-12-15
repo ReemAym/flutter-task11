@@ -1,8 +1,5 @@
 import 'package:e_commerce_app/core/services/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/features/auth/domain/entity/user_entity.dart';
-
-import '../../features/auth/data/models/user_model.dart';
 
 class FireStoreService implements DatabaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -20,10 +17,31 @@ class FireStoreService implements DatabaseService {
   }
 
   @override
-  Future<Map<String, dynamic>> getData(
-      {required String path, required String documentid}) async {
-    var data = await firestore.collection(path).doc(documentid).get();
-    return data.data() as Map<String, dynamic>;
+  Future<dynamic> getData({
+    required String path,
+    String? documentid,
+    Map<String, dynamic>? query,
+  }) async {
+    if (documentid != null) {
+      var data = await firestore.collection(path).doc(documentid).get();
+      return data.data();
+    } else {
+      Query<Map<String, dynamic>> data = firestore.collection(path);
+      if (query != null) {
+        if (query['orderBy'] != null) {
+          var orderField = query['orderBy'];
+          var descending = query['descending'];
+
+          data = data.orderBy(orderField, descending: descending);
+        }
+        if (query['limit'] != null) {
+          var limit = query['limit'];
+          data = data.limit(limit);
+        }
+      }
+      var result = await data.get();
+      return result.docs.map((e) => e.data()).toList();
+    }
   }
 
   @override

@@ -41,7 +41,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'APIkey',
+    apiKey: 'AIzaSyB7pXJarkeyN8VhnCOr5fhk1NqzFzgpD4o',
     appId: '1:895308532347:web:ad13c5306e257daef2b0de',
     messagingSenderId: '895308532347',
     projectId: 'fruit-hub-1a6cb',
@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'APIkey',
+    apiKey: 'AIzaSyBfIODb6gSRK4pgBMeuEhP25ePOGsVGVUQ',
     appId: '1:895308532347:android:559626544c572c17f2b0de',
     messagingSenderId: '895308532347',
     projectId: 'fruit-hub-1a6cb',
@@ -59,11 +59,13 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'APIkey',
+    apiKey: 'AIzaSyBhh5A9JzugTDvkScoQ1kRo708HaFWi5qc',
     appId: '1:895308532347:ios:94754533ae2087c1f2b0de',
     messagingSenderId: '895308532347',
     projectId: 'fruit-hub-1a6cb',
     storageBucket: 'fruit-hub-1a6cb.firebasestorage.app',
+    androidClientId: '895308532347-o27f190j0isi6q0olrugb5r93o6lnd3u.apps.googleusercontent.com',
+    iosClientId: '895308532347-pvn75fpf3lk9ojeki8nro0d5uv9r1gri.apps.googleusercontent.com',
     iosBundleId: 'com.example.eCommerceApp',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '895308532347',
     projectId: 'fruit-hub-1a6cb',
     storageBucket: 'fruit-hub-1a6cb.firebasestorage.app',
+    androidClientId: '895308532347-o27f190j0isi6q0olrugb5r93o6lnd3u.apps.googleusercontent.com',
+    iosClientId: '895308532347-pvn75fpf3lk9ojeki8nro0d5uv9r1gri.apps.googleusercontent.com',
     iosBundleId: 'com.example.eCommerceApp',
   );
 
@@ -85,4 +89,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'fruit-hub-1a6cb.firebasestorage.app',
     measurementId: 'G-JWKGHZ8TEL',
   );
+
 }
